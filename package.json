@@ -1,0 +1,21 @@
+{
+  "name": "jest-puppeteer-demo",
+  "version": "0.1.0",
+  "description": "Demo for UI testing with Jest and Puppeteer",
+  "main": "./__tests__/dynamiclist.test.js",
+  "author": "jsilvax",
+  "license": "MIT",
+  "scripts" : {
+    "test" : "jest"
+  },
+  "jest" : {
+    "testEnvironment" : "./CustomNodeEnvironment.js"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^21.3.0-beta.13",
+    "jest-environment-node": "^21.3.0-beta.13",
+    "puppeteer": "^0.13.0"
+  }
+}
