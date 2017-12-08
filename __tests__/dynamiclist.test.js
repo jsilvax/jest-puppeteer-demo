@@ -42,4 +42,5 @@ test("should lazy load new list items", async () => {
 	
 	expect(numWithLazyLoadedItems).toBeGreaterThan(numOfItems);
 	expect(href).toContain(data[0].uri);
-}, 6000);
+	
+}, 10000);

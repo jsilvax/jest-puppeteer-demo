@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const NodeEnvironment = require("jest-environment-node");
+const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : [];
 
 /**
  * @class CustomNodeEnvironment
@@ -11,7 +12,7 @@ class CustomNodeEnvironment extends NodeEnvironment {
     }
 
     async setUpPuppeteer() {
-        this.browser = await puppeteer.launch({ headless: true });
+        this.browser = await puppeteer.launch({ headless: true, args });
         this.global.page = await this.browser.newPage();
     }
     async tearDownPuppeteer() {
