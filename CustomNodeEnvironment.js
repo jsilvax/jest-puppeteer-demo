@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 const NodeEnvironment = require("jest-environment-node");
-const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : [];
+const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : []; // For Travis CI 
 
 /**
  * @class CustomNodeEnvironment

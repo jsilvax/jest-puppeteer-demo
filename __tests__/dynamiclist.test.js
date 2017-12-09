@@ -6,9 +6,6 @@ test('should lazy load new list items', async () => {
 	const requestUrl = 'http://m.eonline.com/us/category/dynamicList/lady_gaga/json?page=2&pageSize=20';
 	const userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
 
-	// Make assertions
-	expect.assertions(2);
-
 	// Emulate an iPhone
 	await page.emulate({
 		viewport: {
@@ -30,7 +27,6 @@ test('should lazy load new list items', async () => {
 	await page.evaluate(() => window.scrollTo(0, document.querySelector('footer').offsetTop));
 
 	let { data } = await waitForResponse(page, requestUrl);
-	data = JSON.parse(data);
 
 	// Wait for the 21st list element to dynamically be inserted
 	await page.waitForSelector(firstDynamicEl);
@@ -40,7 +36,9 @@ test('should lazy load new list items', async () => {
 
 	// Grab the href of the 21st list element's link
 	const href = await page.$eval(`${firstDynamicEl} a`, el => el.href);
-
+	
+	// Make assertions
+	expect.assertions(2);
 	expect(numWithLazyLoadedItems).toBeGreaterThan(numOfItems);
 	expect(href).toContain(data[0].uri);
 	
