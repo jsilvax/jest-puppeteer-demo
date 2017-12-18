@@ -7,5 +7,5 @@ const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup');
 
 module.exports = async function() {
     await global.__BROWSER__.close();
-   	await rimraf.sync(DIR);
+   	rimraf.sync(DIR);
 }
