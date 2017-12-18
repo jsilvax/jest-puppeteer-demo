@@ -5,17 +5,15 @@
   "main": "./__tests__/dynamiclist.test.js",
   "author": "jsilvax",
   "license": "MIT",
-  "scripts" : {
-    "test" : "jest"
-  },
-  "jest" : {
-    "testEnvironment" : "./CustomNodeEnvironment.js"
+  "scripts": {
+    "test": "jest"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "jest": "^21.3.0-beta.13",
-    "jest-environment-node": "^21.3.0-beta.13",
-    "puppeteer": "^0.13.0"
+    "jest": "21.3.0-beta.15",
+    "jest-environment-node": "^21.3.0-beta.15",
+    "puppeteer": "^0.13.0",
+    "rimraf": "^2.6.2"
   }
 }

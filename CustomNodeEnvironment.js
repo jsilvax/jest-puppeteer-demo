@@ -1,6 +1,12 @@
 const puppeteer = require("puppeteer");
 const NodeEnvironment = require("jest-environment-node");
-const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : []; // For Travis CI 
+// const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : []; // For Travis CI 
+const args = true ? ["--no-sandbox", "--disable-setuid-sandbox"] : []; // For Travis CI 
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup');
 
 /**
  * @class CustomNodeEnvironment
@@ -10,21 +16,17 @@ class CustomNodeEnvironment extends NodeEnvironment {
     constructor(config) {
         super(config);
     }
-
-    async setUpPuppeteer() {
-        this.browser = await puppeteer.launch({ headless: true, args });
-        this.global.page = await this.browser.newPage();
-    }
-    async tearDownPuppeteer() {
-        this.browser.close();
-        delete this.global.page;
-    }
     async setup() {
+        console.log('YEH THIS SETUP IN CUSTOM');
         await super.setup();
-        await this.setUpPuppeteer();
+        const wsEndpoint = fs.readFileSync(path.join(DIR, 'wsEndpoint'), 'utf8');
+        if (!wsEndpoint) throw new Error('wsEndpoint not found');
+        this.global.browser = await puppeteer.connect({
+          browserWSEndpoint: wsEndpoint
+        });
     }
     async teardown() {
-        await this.tearDownPuppeteer();
+        console.log('going to teardown');
         await super.teardown();
     }
 }

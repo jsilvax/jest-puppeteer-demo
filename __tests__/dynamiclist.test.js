@@ -1,6 +1,22 @@
 import waitForResponse from '../helpers/waitForResponse';
+let page;
+
+beforeAll(async () => {
+ 	page = await browser.newPage();
+}, 10000);
+afterAll(async () => {
+ 	await page.close();
+});
+
+
+xtest('should blag', async ()=> {
+	await setTimeout(()=> {
+		expect(true).toBeTruthy();
+	}, 6000);
+}, 10000);
 
 test('should lazy load new list items', async () => {
+	console.time('test');
 	const selector = '[data-hook="dynamic-list"]';
 	const firstDynamicEl = `${selector} > div:nth-child(21)`;
 	const requestUrl = 'http://m.eonline.com/us/category/dynamicList/lady_gaga/json?page=2&pageSize=20';
@@ -24,7 +40,7 @@ test('should lazy load new list items', async () => {
 	const numOfItems = await page.$eval(selector, el => el.children.length);
 
 	// Scroll to the bottom of the page
-	await page.evaluate(() => window.scrollTo(0, document.querySelector('footer').offsetTop));
+	await page.evaluate(() => { window.scrollTo(0, document.querySelector('footer').offsetTop) });
 
 	let { data } = await waitForResponse(page, requestUrl);
 
@@ -41,5 +57,5 @@ test('should lazy load new list items', async () => {
 	expect.assertions(2);
 	expect(numWithLazyLoadedItems).toBeGreaterThan(numOfItems);
 	expect(href).toContain(data[0].uri);
-	
-    }, 10000);
+	console.timeEnd('test');
+}, 35000);
