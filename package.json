@@ -1,6 +1,6 @@
 {
   "name": "jest-puppeteer-demo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Demo for UI testing with Jest and Puppeteer",
   "main": "./__tests__/dynamiclist.test.js",
   "author": "jsilvax",
