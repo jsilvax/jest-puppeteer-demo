@@ -1,8 +1,5 @@
 const puppeteer = require("puppeteer");
 const NodeEnvironment = require("jest-environment-node");
-// const args = process.env.DISABLE_CHROMIUM_SANDBOX ? ["--no-sandbox"] : []; // For Travis CI 
-const args = true ? ["--no-sandbox", "--disable-setuid-sandbox"] : []; // For Travis CI 
-
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -17,17 +14,12 @@ class CustomNodeEnvironment extends NodeEnvironment {
         super(config);
     }
     async setup() {
-        console.log('YEH THIS SETUP IN CUSTOM');
         await super.setup();
         const wsEndpoint = fs.readFileSync(path.join(DIR, 'wsEndpoint'), 'utf8');
         if (!wsEndpoint) throw new Error('wsEndpoint not found');
         this.global.browser = await puppeteer.connect({
           browserWSEndpoint: wsEndpoint
         });
-    }
-    async teardown() {
-        console.log('going to teardown');
-        await super.teardown();
     }
 }
 module.exports = CustomNodeEnvironment;
