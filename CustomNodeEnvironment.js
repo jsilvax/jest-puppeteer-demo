@@ -1,13 +1,14 @@
-const puppeteer = require("puppeteer");
-const NodeEnvironment = require("jest-environment-node");
+const puppeteer = require('puppeteer');
+const NodeEnvironment = require('jest-environment-node');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup');
+const wsEndpointDir = path.join(DIR, 'wsEndpoint');
 
 /**
  * @class CustomNodeEnvironment
- * @description A custom Node Environment that sets up, and tearsdown puppeteer
+ * @description A custom Node Environment that connects to an existing Chromium Instance
  */
 class CustomNodeEnvironment extends NodeEnvironment {
     constructor(config) {
@@ -15,10 +16,10 @@ class CustomNodeEnvironment extends NodeEnvironment {
     }
     async setup() {
         await super.setup();
-        const wsEndpoint = fs.readFileSync(path.join(DIR, 'wsEndpoint'), 'utf8');
+        const wsEndpoint = fs.readFileSync(wsEndpointDir, 'utf8');
         if (!wsEndpoint) throw new Error('wsEndpoint not found');
         this.global.browser = await puppeteer.connect({
-          browserWSEndpoint: wsEndpoint
+            browserWSEndpoint: wsEndpoint
         });
     }
 }

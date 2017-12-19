@@ -8,11 +8,16 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "globalSetup": "./setUpPuppeteer.js",
+    "globalTeardown": "./tearDownPuppeteer.js",
+    "testEnvironment": "./CustomNodeEnvironment.js"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "jest": "21.3.0-beta.15",
-    "jest-environment-node": "^21.3.0-beta.15",
+    "jest": "^22.0.1",
+    "jest-environment-node": "^22.0.1",
     "puppeteer": "^0.13.0",
     "rimraf": "^2.6.2"
   }
